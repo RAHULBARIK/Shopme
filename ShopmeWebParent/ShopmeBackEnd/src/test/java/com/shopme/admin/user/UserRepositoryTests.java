@@ -1,5 +1,7 @@
 package com.shopme.admin.user;
 
+import com.shopme.admin.repository.RoleRepository;
+import com.shopme.admin.repository.UserRepository;
 import com.shopme.common.entity.Role;
 import com.shopme.common.entity.User;
 import org.junit.jupiter.api.Test;
@@ -16,7 +18,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@Rollback(false)
+//@Rollback(false)
 public class UserRepositoryTests {
 
     @Autowired
@@ -94,6 +96,34 @@ public class UserRepositoryTests {
     @Test
     public void testDeleteUser(){
         userRepository.deleteById(8);
+    }
+
+//    @Test
+//    public void checkDuplicateMail(){
+//        String mail = "rahulbarik58376@gmail.com";
+//
+//        User user = userRepository.findByEmail(mail);
+//
+//        if(user==null){
+//            System.out.println("User having this email does not exist");
+//        }else{
+//            System.out.println("Duplicate Email user with this email already exists");
+//        }
+//
+//    }
+
+    @Test
+    public void checkDuplicateMail(){
+        String mail = "rahulbarik583@gmail.com";
+
+        User user = userRepository.getUserByEmail(mail);
+
+        if(user==null){
+            System.out.println("User having this email does not exist");
+        }else{
+            System.out.println("Duplicate Email user with this email already exists");
+        }
+
     }
 
 
