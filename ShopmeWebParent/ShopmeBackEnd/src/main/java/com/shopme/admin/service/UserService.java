@@ -85,4 +85,13 @@ public class UserService {
         }
 
     }
+
+    public void deleteUser(Integer id)  throws UserNotFoundException{
+        try{
+            User user = userRepository.findById(id).get();
+            userRepository.deleteById(id);
+        } catch (NoSuchElementException ex){
+            throw  new UserNotFoundException("Could not find the user for Delete with ID: "+id);
+        }
+    }
 }
