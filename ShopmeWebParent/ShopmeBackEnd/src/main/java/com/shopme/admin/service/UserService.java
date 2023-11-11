@@ -1,18 +1,24 @@
 package com.shopme.admin.service;
 
+import com.shopme.admin.exception.UserNotFoundException;
 import com.shopme.admin.repository.RoleRepository;
 import com.shopme.admin.repository.UserRepository;
 import com.shopme.common.entity.Role;
 import com.shopme.common.entity.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Objects;
 
 @Service
 public class UserService {
+
+    private final   static Logger logger = LoggerFactory.getLogger(UserService.class);
 
     @Autowired
     private UserRepository userRepository;
@@ -23,6 +29,7 @@ public class UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+
     public List<User> getAllUser(){
         return userRepository.findAll();
     }
@@ -30,7 +37,21 @@ public class UserService {
     public List<Role> getAllRole() { return roleRepository.findAll();}
 
     public User saveUser(User user) {
-        encodePassWord(user);
+        logger.info("Calling the save method: "+ user.toString());
+        boolean updateUser = Objects.nonNull(user.getId());
+        logger.info("Check the boolean value: "+updateUser+"password is null or not: "+Objects.nonNull(user.getPassword()));
+        if(updateUser){
+            User exitingUser =  userRepository.findById(user.getId()).get();
+            if(Objects.isNull(user.getPassword())){
+                user.setPassword(exitingUser.getPassword());
+            }else{
+                encodePassWord(user);
+            }
+        }else{
+            encodePassWord(user);
+        }
+
+
         return userRepository.save(user);
     }
 
@@ -38,13 +59,30 @@ public class UserService {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
     }
 
-    public boolean isEmailUnique(String email){
+    public boolean isEmailUnique(Integer id,String email){
         User user = userRepository.getUserByEmail(email);
-        return Objects.isNull(user);
+
+        if(Objects.isNull(user)){
+            return true;
+        }
+
+        if(Objects.nonNull(id) && userRepository.findById(id).isPresent()){
+            User savedUser = userRepository.findById(id).get();
+            return savedUser.getEmail().equals(email);
+        }
+
+
+        return false;
     }
 
 
+    public User get(Integer id) throws UserNotFoundException {
+        //Logic for checking and retrieving the user from user repository
+        try{
+            return userRepository.findById(id).get();
+        } catch (NoSuchElementException ex){
+            throw new UserNotFoundException("Could not find any user with ID "+id);
+        }
 
-
-
+    }
 }

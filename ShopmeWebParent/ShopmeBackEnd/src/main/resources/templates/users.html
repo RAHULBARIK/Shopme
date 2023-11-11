@@ -6,8 +6,10 @@
     <title>Home - Shopme Admin</title>
 
     <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/fontawesome/all.css}"/>
     <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}" > </script>
     <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}" > </script>
+
 </head>
 <body>
 <div class="container-fluid">
@@ -92,7 +94,8 @@
                     <td>[[${user.roles}]]</td>
                     <td>[[${user.enabled}]]</td>
                     <td>
-                        Edit &nbsp; Delete
+                        <a title="Edit this User" th:href="@{'/users/edit/'+${user.id}}">Edit</a>
+                        <span>&nbsp; Delete</span>
                     </td>
 
                 </tr>
