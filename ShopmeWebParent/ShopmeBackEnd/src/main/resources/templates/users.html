@@ -9,6 +9,41 @@
     <link rel="stylesheet" type="text/css" th:href="@{/fontawesome/all.css}"/>
     <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}" > </script>
     <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}" > </script>
+    <script src="https://kit.fontawesome.com/e32fe8e1ef.js" crossorigin="anonymous"></script>
+
+    <style>
+        .center {
+            text-align:center;
+            width:100%;
+            margin: 10px;
+        }
+        .right{
+            text-align:right;
+            margin-left: 10px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+        .left{
+            text-align:left;
+             margin: 10px;
+        }
+
+        .icon-white{
+            color: white
+        }
+        .icon-silver{
+            color: silver
+        }
+        .icon-green{
+            color: green
+        }
+        .icon-dark{
+            color: gray
+        }
+        .icon-red{
+            color: red
+        }
+    </style>
 
 </head>
 <body>
@@ -87,16 +122,19 @@
             <tbody>
                 <tr th:each="user: ${listUsers}">
                     <td>[[${user.id}]]</td>
-                    <td></td>
+                    <td><span class="fas fa-portrait fa-2x center icon-dark" ></span></td>
                     <td>[[${user.email}]]</td>
                     <td>[[${user.firstName}]]</td>
                     <td>[[${user.lastName}]]</td>
                     <td>[[${user.roles}]]</td>
-                    <td>[[${user.enabled}]]</td>
                     <td>
-                        <a title="Edit this User" th:href="@{'/users/edit/'+${user.id}}">Edit </a>
+                        <a th:if="${user.enabled == true}" class="fas fa-check-circle fa-2x icon-green center" href=""></a>
+                        <a th:if="${user.enabled != true}" class="fas fa-check-circle fa-2x icon-silver center" href=""></a>
+                    </td>
+                    <td>
+                        <a title="Edit this User" class="fas fa-edit fa-2x icon-green left" th:href="@{'/users/edit/'+${user.id}}"></a>
 
-                        <a title="Delete this User" class="link-delete" th:href="@{'/users/delete/'+${user.id}}" th:userId="${user.id}">Delete</a>
+                        <a title="Delete this User" class="fas fa-trash fa-2x icon-dark link-delete right" th:href="@{'/users/delete/'+${user.id}}" th:userId="${user.id}"></a>
                     </td>
 
                 </tr>
