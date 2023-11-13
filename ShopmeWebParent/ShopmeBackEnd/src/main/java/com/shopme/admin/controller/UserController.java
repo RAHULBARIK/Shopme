@@ -81,5 +81,29 @@ public class UserController {
 
     }
 
+    @GetMapping("/users/enable/{id}")
+    public String enableUser(@PathVariable("id") Integer id,RedirectAttributes redirectAttributes) throws UserNotFoundException{
+        try{
+            userService.userEnable(id);
+            redirectAttributes.addFlashAttribute("message","User Enabled with the id: "+id);
+            return "redirect:/users";
+        }catch (UserNotFoundException ex){
+            redirectAttributes.addFlashAttribute("message","Could not found user with id: "+id);
+            return "redirect:/users";
+        }
+    }
+
+    @GetMapping("/users/disable/{id}")
+    public String disableUser(@PathVariable("id") Integer id,RedirectAttributes redirectAttributes) throws UserNotFoundException{
+        try{
+            userService.userDisable(id);
+            redirectAttributes.addFlashAttribute("message","User Disabled with the id: "+id);
+            return "redirect:/users";
+        }catch (UserNotFoundException ex){
+            redirectAttributes.addFlashAttribute("message","Could not found user with id: "+id);
+            return "redirect:/users";
+        }
+    }
+
 
 }

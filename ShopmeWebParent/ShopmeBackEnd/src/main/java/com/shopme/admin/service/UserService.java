@@ -94,4 +94,24 @@ public class UserService {
             throw  new UserNotFoundException("Could not find the user for Delete with ID: "+id);
         }
     }
+
+    public User userEnable(Integer id) throws  UserNotFoundException{
+        try {
+            User user = userRepository.findById(id).get();
+            user.setEnabled(true);
+            return userRepository.save(user);
+        }catch (Exception ex){
+            throw new UserNotFoundException("User not found with a id: "+id);
+        }
+    }
+
+    public User userDisable(Integer id) throws  UserNotFoundException{
+        try {
+            User user = userRepository.findById(id).get();
+            user.setEnabled(false);
+            return userRepository.save(user);
+        }catch (Exception ex){
+            throw new UserNotFoundException("User not found with a id: "+id);
+        }
+    }
 }
