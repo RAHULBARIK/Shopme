@@ -131,4 +131,12 @@ public class User {
                 ", roles=" + roles +
                 '}';
     }
+
+    @Transient
+    public String getPhotosImagePath() {
+        if(this.id == null || this.photos == null ){
+            return "/images/default-image.png";
+        }
+        return "/user-photos/" + this.id +"/" + this.photos;
+    }
 }
