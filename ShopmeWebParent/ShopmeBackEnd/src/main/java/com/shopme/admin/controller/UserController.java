@@ -5,8 +5,11 @@ import com.shopme.admin.service.UserService;
 import com.shopme.admin.util.FileUploadUtil;
 import com.shopme.common.entity.Role;
 import com.shopme.common.entity.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -23,6 +26,9 @@ import java.util.List;
 @Controller
 public class UserController {
 
+    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+
+    public static final int USERS_PER_PAGE = 4;
     @Autowired
     private UserService userService;
 
@@ -32,9 +38,7 @@ public class UserController {
 //    }
     @GetMapping("/users")
     public String getAllUser(Model model){
-        List<User> users = userService.getAllUser();
-        model.addAttribute("listUsers",users);
-        return "users";
+       return listUserByPageNumber(1,model);
     }
 
     @GetMapping("/users/new")
@@ -121,6 +125,29 @@ public class UserController {
             redirectAttributes.addFlashAttribute("message","Could not found user with id: "+id);
             return "redirect:/users";
         }
+    }
+
+    @GetMapping("/users/page/{pageNum}")
+    public String listUserByPageNumber(@PathVariable("pageNum") int pageNum,Model model){
+        Page<User> userPage = userService.listByPage(pageNum);
+        List<User> users = userPage.getContent();
+
+        long startCount = (long) (pageNum-1)*USERS_PER_PAGE+1;
+        long endCount = (long) (pageNum)*USERS_PER_PAGE;
+        if(endCount > userPage.getTotalElements()){
+            endCount = userPage.getTotalElements();
+        }
+        model.addAttribute("listUsers",users);
+        model.addAttribute("totalEle",userPage.getTotalElements());
+        model.addAttribute("startCount",startCount);
+        model.addAttribute("endCount",endCount);
+        model.addAttribute("pageNum",pageNum);
+        model.addAttribute("lastPageNum",userPage.getTotalPages());
+
+
+        logger.info("PageNumber: "+pageNum+" totalPages: "+ userPage.getTotalPages()+" Total Elements:"+userPage.getTotalElements());
+
+        return "users";
     }
 
 

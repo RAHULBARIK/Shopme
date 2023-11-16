@@ -8,6 +8,9 @@ import com.shopme.common.entity.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +22,8 @@ import java.util.Objects;
 public class UserService {
 
     private final   static Logger logger = LoggerFactory.getLogger(UserService.class);
+
+    public static final int USERS_PER_PAGE = 4;
 
     @Autowired
     private UserRepository userRepository;
@@ -113,5 +118,12 @@ public class UserService {
         }catch (Exception ex){
             throw new UserNotFoundException("User not found with a id: "+id);
         }
+    }
+
+
+
+    public Page<User> listByPage(int pageNum){
+        Pageable pageable = PageRequest.of(pageNum-1,USERS_PER_PAGE);
+        return userRepository.findAll(pageable);
     }
 }

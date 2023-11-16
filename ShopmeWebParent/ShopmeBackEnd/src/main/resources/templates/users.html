@@ -165,6 +165,48 @@
             </tbody>
         </table>
     </div>
+
+    <div class="text-center m-1" th:if="${totalItems > 0}">
+        <span>Showing Users from [[${startCount}]] to [[${endCount}]] of [[${totalEle}]]</span>
+    </div>
+<!--    <div class="text-center m-1" th:unless="${totalItems == 0}">-->
+<!--        <span>No users found</span>-->
+<!--    </div>-->
+
+    <div>
+        <nav>
+            <ul class="pagination justify-content-center">
+                <li class="page-item">
+                    <a class="page-link" th:href="@{/users/page/1}">First</a>
+                </li>
+                <li>
+                    <a th:if="${pageNum == 1}" class="page-link" th:href="@{/users/page/1}">Previous</a>
+                    <a th:if="${pageNum != 1}" class="page-link" th:href="@{'/users/page/'+${pageNum-1}}">Previous</a>
+                </li>
+
+<!--                <li class="page-item"><a class="page-link" th:href="@{/users/page/1}">1</a></li>-->
+<!--                <li class="page-item"><a class="page-link" th:href="@{/users/page/2}">2</a></li>-->
+<!--                <li class="page-item"><a class="page-link" th:href="@{/users/page/3}">3</a></li>-->
+<!--                <li class="page-item"><a class="page-link" th:href="@{/users/page/4}">4</a></li>-->
+
+                <li class="page-item" th:each="i : ${  #numbers.sequence(1,lastPageNum) }">
+                    <a class="page-link" th:href="@{'/users/page/'+${i}}">[[${i}]]</a>
+                </li>
+
+
+
+                <li>
+                    <a th:if="${pageNum == lastPageNum }" class="page-link" th:href="@{'/users/page/' +${lastPageNum}}">Next</a>
+                    <a th:if="${pageNum != lastPageNum}" class="page-link" th:href="@{'/users/page/'+${pageNum+1}}">Next</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" th:href="@{'/users/page/' +${lastPageNum}}">Last</a>
+                </li>
+
+            </ul>
+        </nav>
+    </div>
+
     <div class="modal fade text-center" id="confirmModal">
         <div class="modal-dialog">
             <div class="modal-content">
