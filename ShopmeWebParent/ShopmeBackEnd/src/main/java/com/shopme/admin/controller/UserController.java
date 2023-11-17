@@ -38,7 +38,7 @@ public class UserController {
 //    }
     @GetMapping("/users")
     public String getAllUser(Model model){
-       return listUserByPageNumber(1,model);
+       return listUserByPageNumber(1,model,"firstName","asc");
     }
 
     @GetMapping("/users/new")
@@ -128,10 +128,13 @@ public class UserController {
     }
 
     @GetMapping("/users/page/{pageNum}")
-    public String listUserByPageNumber(@PathVariable("pageNum") int pageNum,Model model){
-        Page<User> userPage = userService.listByPage(pageNum);
+    public String listUserByPageNumber(@PathVariable("pageNum") int pageNum,Model model,
+                                       @RequestParam("sortField") String sortField,
+                                       @RequestParam("sortDir") String sortDir){
+        Page<User> userPage = userService.listByPage(pageNum,sortField,sortDir);
         List<User> users = userPage.getContent();
-
+        String revSortDir = sortDir.equals("asc")?"desc":"asc";
+        logger.info("sortField value:"+sortField+" sortDir value: "+sortDir);
         long startCount = (long) (pageNum-1)*USERS_PER_PAGE+1;
         long endCount = (long) (pageNum)*USERS_PER_PAGE;
         if(endCount > userPage.getTotalElements()){
@@ -143,6 +146,11 @@ public class UserController {
         model.addAttribute("endCount",endCount);
         model.addAttribute("pageNum",pageNum);
         model.addAttribute("lastPageNum",userPage.getTotalPages());
+        model.addAttribute("sortField",sortField);
+        model.addAttribute("sortDir",sortDir);
+        model.addAttribute("revSortDir",revSortDir);
+
+
 
 
         logger.info("PageNumber: "+pageNum+" totalPages: "+ userPage.getTotalPages()+" Total Elements:"+userPage.getTotalElements());

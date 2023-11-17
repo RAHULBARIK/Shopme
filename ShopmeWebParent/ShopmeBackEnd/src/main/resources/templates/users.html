@@ -63,15 +63,24 @@
         .box1 img {
             object-fit: cover;
         }
+        .img-logo{
+            width:80px;
+            height:80px;
+        }
+        .size-font{
+            font-size: 18px;
+        }
+
     </style>
 
 </head>
 <body>
-<div class="container-fluid">
-    <div>
-        <nav class="navbar navbar-expand bg-dark navbar-dark ">
+<div class="container-fluid" style="background-color: #e6ffff">
+    <div >
+        <nav class="navbar navbar-expand bg-info navbar-dark ">
             <a class="navbar-brand" th:href="@{/}">
-                <img th:src="@{/images/ShopmeAdminSmall.png}" />
+<!--                <img th:src="@{/images/ShopmeAdminSmall.png}" />-->
+                <img class="img-logo" th:src="@{/images/logo-dark.png}" />
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -79,37 +88,37 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" th:href="@{/users}">Users</a>
+                        <a class="nav-link text-dark font-weight-bold size-font" th:href="@{/users}">Users</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" th:href="@{/categories}">Categories</a>
+                        <a class="nav-link text-dark font-weight-bold size-font" th:href="@{/categories}">Categories</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" th:href="@{/brands}">Brands</a>
+                        <a class="nav-link text-dark font-weight-bold size-font" th:href="@{/brands}">Brands</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" th:href="@{/products}">Products</a>
+                        <a class="nav-link text-dark font-weight-bold size-font" th:href="@{/products}">Products</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" th:href="@{/customers}">Customers</a>
+                        <a class="nav-link text-dark font-weight-bold size-font" th:href="@{/customers}">Customers</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" th:href="@{/shipping}">Shipping</a>
+                        <a class="nav-link text-dark font-weight-bold size-font" th:href="@{/shipping}">Shipping</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" th:href="@{/orders}">Orders</a>
+                        <a class="nav-link text-dark font-weight-bold size-font" th:href="@{/orders}">Orders</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" th:href="@{/report}">Sales Report</a>
+                        <a class="nav-link text-dark font-weight-bold size-font" th:href="@{/report}">Sales Report</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" th:href="@{/articles}">Articles</a>
+                        <a class="nav-link text-dark font-weight-bold size-font" th:href="@{/articles}">Articles</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" th:href="@{/menus}">Menus</a>
+                        <a class="nav-link text-dark font-weight-bold size-font" th:href="@{/menus}">Menus</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" th:href="@{/settings}">Settings</a>
+                        <a class="nav-link text-dark font-weight-bold size-font" th:href="@{/settings}">Settings</a>
                     </li>
                 </ul>
             </div>
@@ -126,14 +135,30 @@
     </div>
 
     <div>
-        <table class="table table-bordered table-striped table-hover table-responsive-xl">
-            <thead class="thead-dark">
+        <table class="table table-bordered table-striped table-hover table-light  table-responsive-xl">
+            <thead class="bg-info">
 
-                    <th>User ID</th>
-                    <th>Photos</th>
-                    <th>E-mail</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
+                    <th>
+                        <a class="text-dark" th:if="${sortField!='id'}" th:href="@{  '/users/page/'+${pageNum} +'?sortField=id&sortDir='+${sortDir} }">User Id</a>
+                        <a class="text-dark" th:if="${sortField=='id'}" th:href="@{  '/users/page/'+${pageNum} +'?sortField=id&sortDir='+${revSortDir} }">User Id</a>
+                        <span th:if="${sortField=='id'}" th:class="${sortDir =='asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
+                    </th>
+                    <th>Photo</th>
+                    <th>
+                        <a class="text-dark" th:if="${sortField!='email'}" th:href="@{  '/users/page/'+${pageNum} +'?sortField=email&sortDir='+${sortDir} }">E-mail</a>
+                        <a class="text-dark" th:if="${sortField=='email'}" th:href="@{  '/users/page/'+${pageNum} +'?sortField=email&sortDir='+${revSortDir} }">E-mail</a>
+                        <span th:if="${sortField=='email'}" th:class="${sortDir =='asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
+                    </th>
+                    <th>
+                        <a class="text-dark" th:if="${sortField!='firstName'}" th:href="@{  '/users/page/'+${pageNum} +'?sortField=firstName&sortDir='+${sortDir} }">First Name</a>
+                        <a class="text-dark" th:if="${sortField=='firstName'}" th:href="@{  '/users/page/'+${pageNum} +'?sortField=firstName&sortDir='+${revSortDir} }">First Name</a>
+                        <span th:if="${sortField=='firstName'}" th:class="${sortDir =='asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
+                    </th>
+                    <th>
+                        <a class="text-dark" th:if="${sortField!='lastName'}" th:href="@{  '/users/page/'+${pageNum} +'?sortField=lastName&sortDir='+${sortDir} }">Last Name</a>
+                        <a class="text-dark" th:if="${sortField=='lastName'}" th:href="@{  '/users/page/'+${pageNum} +'?sortField=lastName&sortDir='+${revSortDir} }">Last Name</a>
+                        <span th:if="${sortField=='lastName'}" th:class="${sortDir =='asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
+                    </th>
                     <th>Roles</th>
                     <th>Enabled</th>
                     <th></th>
@@ -184,23 +209,23 @@
         <nav>
             <ul class="pagination justify-content-center">
                 <li class="page-item">
-                    <a class="page-link" th:href="@{/users/page/1}">First</a>
+                    <a class="page-link bg-info text-dark font-weight-bold" th:href="@{ '/users/page/1' + '?sortField=firstName&sortDir='+${sortDir} }">First</a>
                 </li>
                 <li>
-                    <a th:if="${pageNum == 1}" class="page-link" th:class="${'page-link disable'}" th:href="@{/users/page/1}">Previous</a>
-                    <a th:if="${pageNum != 1}" class="page-link" th:href="@{'/users/page/'+${pageNum-1}}">Previous</a>
+                    <a th:if="${pageNum == 1}" class="page-link bg-info text-dark font-weight-bold" th:class="${'page-link bg-info text-dark font-weight-bold'}" th:href="@{'/users/page/1' + '?sortField=firstName&sortDir='+${sortDir} }">Prev</a>
+                    <a th:if="${pageNum != 1}" class="page-link bg-info text-dark font-weight-bold" th:href="@{'/users/page/'+${pageNum-1} +'?sortField=firstName&sortDir='+${sortDir} }">Prev</a>
                 </li>
 
-                <li th:class="${pageNum != i ? 'page-item' :'page-item active' }" class="page-item" th:each="i : ${  #numbers.sequence(1,lastPageNum) }">
-                    <a class="page-link" th:href="@{'/users/page/'+${i}}">[[${i}]]</a>
+                <li th:class="${pageNum != i ? 'page-item' :'page-item bg-info active' }" class="page-item" th:each="i : ${  #numbers.sequence(1,lastPageNum) }">
+                    <a class="page-link text-dark font-weight-bold" th:href="@{'/users/page/'+${i}+'?sortField=firstName&sortDir='+${sortDir}     }">[[${i}]]</a>
                 </li>
 
                 <li>
-                    <a th:if="${pageNum == lastPageNum }" class="page-link" th:href="@{'/users/page/' +${lastPageNum}}">Next</a>
-                    <a th:if="${pageNum != lastPageNum}" class="page-link" th:href="@{'/users/page/'+${pageNum+1}}">Next</a>
+                    <a th:if="${pageNum == lastPageNum }" class="page-link bg-info text-dark font-weight-bold" th:href="@{'/users/page/' +${lastPageNum} + '?sortField=email&sortDir='+${sortDir} }">Next</a>
+                    <a th:if="${pageNum != lastPageNum}" class="page-link bg-info text-dark font-weight-bold" th:href="@{'/users/page/'+${pageNum+1} + '?sortField=email&sortDir='+${sortDir} }">Next</a>
                 </li>
                 <li class="page-item">
-                    <a class="page-link" th:href="@{'/users/page/' +${lastPageNum}}">Last</a>
+                    <a class="page-link bg-info text-dark font-weight-bold" th:href="@{'/users/page/' +${lastPageNum} + '?sortField=email&sortDir='+${sortDir} }">Last</a>
                 </li>
 
             </ul>
