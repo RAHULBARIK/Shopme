@@ -144,6 +144,23 @@ public class UserRepositoryTests {
         }
     }
 
+    @Test
+    public void testSearching(){
+        int pageNumber = 0;
+        int pageSize = 4;
+        Pageable pageable = PageRequest.of(pageNumber,pageSize);
+
+        Page<User> userPage = userRepository.findAll("Barik",pageable);
+
+        List<User> content = userPage.getContent();
+
+        for(User user:content){
+            System.out.println(user.toString());
+        }
+
+
+    }
+
 
 
 }
