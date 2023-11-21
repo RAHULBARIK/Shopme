@@ -56,16 +56,16 @@
            height: 100px;
         }
         .box img {
-            width: 100px;
-            height: 100px;
+            width: 91px;
+            height: 91px;
         }
 
         .box1 img {
             object-fit: cover;
         }
         .img-logo{
-            width:80px;
-            height:80px;
+            width:70px;
+            height:70px;
         }
         .size-font{
             font-size: 18px;
@@ -155,24 +155,24 @@
             <thead class="bg-info">
 
                     <th>
-                        <a class="text-dark" th:if="${sortField!='id'}" th:href="@{  '/users/page/'+${pageNum} +'?sortField=id&sortDir='+${sortDir} + ${sortDir}   }">User Id</a>
-                        <a class="text-dark" th:if="${sortField=='id'}" th:href="@{  '/users/page/'+${pageNum} +'?sortField=id&sortDir='+${revSortDir} + ${sortDir}   }">User Id</a>
+                        <a class="text-dark" th:if="${sortField!='id'}" th:href="@{  '/users/page/'+${pageNum} +'?sortField=id&sortDir='+${sortDir} + ${keyword != null ?'&keyword='+keyword:'&keyword='+'' }   }">User Id</a>
+                        <a class="text-dark" th:if="${sortField=='id'}" th:href="@{  '/users/page/'+${pageNum} +'?sortField=id&sortDir='+${revSortDir} + ${keyword != null ?'&keyword='+keyword:'&keyword='+'' }   }">User Id</a>
                         <span th:if="${sortField=='id'}" th:class="${sortDir =='asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
                     </th>
                     <th>Photo</th>
                     <th>
-                        <a class="text-dark" th:if="${sortField!='email'}" th:href="@{  '/users/page/'+${pageNum} +'?sortField=email&sortDir='+${sortDir} }">E-mail</a>
-                        <a class="text-dark" th:if="${sortField=='email'}" th:href="@{  '/users/page/'+${pageNum} +'?sortField=email&sortDir='+${revSortDir} }">E-mail</a>
+                        <a class="text-dark" th:if="${sortField!='email'}" th:href="@{  '/users/page/'+${pageNum} +'?sortField=email&sortDir='+${sortDir} + ${keyword != null ?'&keyword='+keyword:'&keyword='+'' }  }">E-mail</a>
+                        <a class="text-dark" th:if="${sortField=='email'}" th:href="@{  '/users/page/'+${pageNum} +'?sortField=email&sortDir='+${revSortDir} + ${keyword != null ?'&keyword='+keyword:'&keyword='+'' } }">E-mail</a>
                         <span th:if="${sortField=='email'}" th:class="${sortDir =='asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
                     </th>
                     <th>
-                        <a class="text-dark" th:if="${sortField!='firstName'}" th:href="@{  '/users/page/'+${pageNum} +'?sortField=firstName&sortDir='+${sortDir} }">First Name</a>
-                        <a class="text-dark" th:if="${sortField=='firstName'}" th:href="@{  '/users/page/'+${pageNum} +'?sortField=firstName&sortDir='+${revSortDir} }">First Name</a>
+                        <a class="text-dark" th:if="${sortField!='firstName'}" th:href="@{  '/users/page/'+${pageNum} +'?sortField=firstName&sortDir='+${sortDir} + ${keyword != null ?'&keyword='+keyword:'&keyword='+'' } }">First Name</a>
+                        <a class="text-dark" th:if="${sortField=='firstName'}" th:href="@{  '/users/page/'+${pageNum} +'?sortField=firstName&sortDir='+${revSortDir} + ${keyword != null ?'&keyword='+keyword:'&keyword='+'' } }">First Name</a>
                         <span th:if="${sortField=='firstName'}" th:class="${sortDir =='asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
                     </th>
                     <th>
-                        <a class="text-dark" th:if="${sortField!='lastName'}" th:href="@{  '/users/page/'+${pageNum} +'?sortField=lastName&sortDir='+${sortDir} }">Last Name</a>
-                        <a class="text-dark" th:if="${sortField=='lastName'}" th:href="@{  '/users/page/'+${pageNum} +'?sortField=lastName&sortDir='+${revSortDir} }">Last Name</a>
+                        <a class="text-dark" th:if="${sortField!='lastName'}" th:href="@{  '/users/page/'+${pageNum} +'?sortField=lastName&sortDir='+${sortDir} + ${keyword != null ?'&keyword='+keyword:'&keyword='+'' } }">Last Name</a>
+                        <a class="text-dark" th:if="${sortField=='lastName'}" th:href="@{  '/users/page/'+${pageNum} +'?sortField=lastName&sortDir='+${revSortDir} + ${keyword != null ?'&keyword='+keyword:'&keyword='+'' } }">Last Name</a>
                         <span th:if="${sortField=='lastName'}" th:class="${sortDir =='asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
                     </th>
                     <th>Roles</th>
@@ -225,23 +225,23 @@
         <nav>
             <ul class="pagination justify-content-center">
                 <li class="page-item">
-                    <a class="page-link bg-info text-dark font-weight-bold" th:href="@{ '/users/page/1' + '?sortField=firstName&sortDir='+${sortDir} }">First</a>
+                    <a class="page-link bg-info text-dark font-weight-bold" th:href="@{ '/users/page/1' + '?sortField='+${sortField}+'&sortDir='+${sortDir} +${keyword != null ?'&keyword='+keyword:'&keyword='+'' } }">First</a>
                 </li>
                 <li>
-                    <a th:if="${pageNum == 1}" class="page-link bg-info text-dark font-weight-bold" th:class="${'page-link bg-info text-dark font-weight-bold'}" th:href="@{'/users/page/1' + '?sortField=firstName&sortDir='+${sortDir} }">Prev</a>
-                    <a th:if="${pageNum != 1}" class="page-link bg-info text-dark font-weight-bold" th:href="@{'/users/page/'+${pageNum-1} +'?sortField=firstName&sortDir='+${sortDir} }">Prev</a>
+                    <a th:if="${pageNum == 1}" class="page-link bg-info text-dark font-weight-bold" th:class="${'page-link bg-info text-dark font-weight-bold'}" th:href="@{'/users/page/1' + '?sortField='+${sortField}+'&sortDir='+${sortDir} + ${keyword != null ?'&keyword='+keyword:'&keyword='+'' }  }">Prev</a>
+                    <a th:if="${pageNum != 1}" class="page-link bg-info text-dark font-weight-bold" th:href="@{'/users/page/'+${pageNum-1} + '?sortField='+${sortField}+'&sortDir=' +${sortDir} + ${keyword != null ?'&keyword='+keyword:'&keyword='+'' } }">Prev</a>
                 </li>
 
                 <li th:class="${pageNum != i ? 'page-item' :'page-item bg-info active' }" class="page-item" th:each="i : ${  #numbers.sequence(1,lastPageNum) }">
-                    <a class="page-link text-dark font-weight-bold" th:href="@{'/users/page/'+${i}+'?sortField=firstName&sortDir='+${sortDir} + ${keyword != null ?'&keyword='+keyword:'' }     }">[[${i}]]</a>
+                    <a class="page-link text-dark font-weight-bold" th:href="@{'/users/page/'+${i}+ '?sortField='+${sortField}+'&sortDir=' +${sortDir} + ${keyword != null ?'&keyword='+keyword:'&keyword='+'' }      }">[[${i}]]</a>
                 </li>
 
                 <li>
-                    <a th:if="${pageNum == lastPageNum }" class="page-link bg-info text-dark font-weight-bold" th:href="@{'/users/page/' +${lastPageNum} + '?sortField=email&sortDir='+${sortDir} }">Next</a>
-                    <a th:if="${pageNum != lastPageNum}" class="page-link bg-info text-dark font-weight-bold" th:href="@{'/users/page/'+${pageNum+1} + '?sortField=email&sortDir='+${sortDir} }">Next</a>
+                    <a th:if="${pageNum == lastPageNum }" class="page-link bg-info text-dark font-weight-bold" th:href="@{'/users/page/' +${lastPageNum} + '?sortField='+${sortField}+'&sortDir=' +${sortDir} + ${keyword != null ?'&keyword='+keyword:'&keyword='+'' }  }">Next</a>
+                    <a th:if="${pageNum != lastPageNum}" class="page-link bg-info text-dark font-weight-bold" th:href="@{'/users/page/'+${pageNum+1} + '?sortField='+${sortField}+'&sortDir=' +${sortDir} + ${keyword != null ?'&keyword='+keyword:'&keyword='+'' }  }">Next</a>
                 </li>
                 <li class="page-item">
-                    <a class="page-link bg-info text-dark font-weight-bold" th:href="@{'/users/page/' +${lastPageNum} + '?sortField=email&sortDir='+${sortDir} }">Last</a>
+                    <a class="page-link bg-info text-dark font-weight-bold" th:href="@{'/users/page/' +${lastPageNum} +'?sortField='+${sortField}+'&sortDir='+${sortDir} + ${keyword != null ?'&keyword='+keyword:'&keyword='+'' } }">Last</a>
                 </li>
 
             </ul>

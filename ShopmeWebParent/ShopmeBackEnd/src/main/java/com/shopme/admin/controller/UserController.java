@@ -22,6 +22,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 public class UserController {
@@ -150,7 +151,9 @@ public class UserController {
         model.addAttribute("sortField",sortField);
         model.addAttribute("sortDir",sortDir);
         model.addAttribute("revSortDir",revSortDir);
-        model.addAttribute("keyword",keyword);
+        if(Objects.nonNull(keyword))
+            model.addAttribute("keyword",keyword);
+        else
 
 
 
