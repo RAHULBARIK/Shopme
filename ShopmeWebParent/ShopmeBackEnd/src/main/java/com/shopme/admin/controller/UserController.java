@@ -3,8 +3,10 @@ package com.shopme.admin.controller;
 import com.shopme.admin.exception.UserNotFoundException;
 import com.shopme.admin.service.UserService;
 import com.shopme.admin.util.FileUploadUtil;
+import com.shopme.admin.util.UserCSVExporter;
 import com.shopme.common.entity.Role;
 import com.shopme.common.entity.User;
+import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -154,14 +156,19 @@ public class UserController {
         if(Objects.nonNull(keyword))
             model.addAttribute("keyword",keyword);
         else
-
-
-
-
-        logger.info("PageNumber: "+pageNum+" totalPages: "+ userPage.getTotalPages()+" Total Elements:"+userPage.getTotalElements());
+            logger.info("PageNumber: "+pageNum+" totalPages: "+ userPage.getTotalPages()+" Total Elements:"+userPage.getTotalElements());
 
         return "users";
     }
+
+    @GetMapping("/users/export/csv")
+    public String exportUsersToCSV(HttpServletResponse httpServletResponse) throws IOException {
+        List<User> userList = userService.getAllUser();
+        UserCSVExporter userCSVExporter = new UserCSVExporter();
+        userCSVExporter.export(userList,httpServletResponse);
+        return "users";
+    }
+
 
 
 }
