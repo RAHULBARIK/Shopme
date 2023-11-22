@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta http-equiv="content-type" content="text/html;charset=UTF-8">
     <meta name="viewport" content="width=device-width,intial-scale=1.0,minimum-scale=1.0">
@@ -42,6 +42,12 @@
         .icon-red{
             color: red
         }
+        .icon-light-green{
+            color: springgreen;
+        }
+        .icon-teal{
+            color: teal;
+         }
          .center-photo {
             width:25%;
             height:25%;
@@ -69,6 +75,33 @@
         }
         .size-font{
             font-size: 18px;
+        }
+
+        @media screen and (max-width: 768px){
+            /* small screen */
+            div.full-details{
+                display: none;
+            }
+            div.less-details {
+                display: block;
+            }
+        }
+
+        @media screen and (min-width: 768px) and (max-width: 1024px){
+            /* medium screen */
+            div.full-details{
+                display: block;
+            }
+            div.less-details {
+                display: none;
+            }
+        }
+
+        @media screen and (min-width: 1024px){
+            /* large screen */
+            div.less-details {
+                display: none;
+            }
         }
 
     </style>
@@ -127,13 +160,25 @@
     </div>
     <div>
         <h2>Manage Users</h2>
-        <a th:href="@{/users/new}">Create New User</a>
+        <a th:href="@{/users/new}">
+            Create New User
+            <i class="fas fa-user-plus fa-2x "></i>
+        </a>
         &nbsp;|&nbsp;
-        <a th:href="@{/users/export/csv}">Export to CSV</a>
+        <a th:href="@{/users/export/csv}" class="icon-teal" >
+            Export to CSV
+            <i class="fas fa-file-csv fa-2x "></i>
+        </a>
         &nbsp;|&nbsp;
-        <a th:href="@{/users/export/excel}">Export to Excel</a>
+        <a th:href="@{/users/export/excel}" class="icon-green" >
+            Export to Excel
+            <i class="fas fa-file-excel fa-2x "></i>
+        </a>
         &nbsp;|&nbsp;
-        <a th:href="@{/users/export/pdf}">Export to Pdf</a>
+        <a th:href="@{/users/export/pdf}" class="icon-red" >
+            Export to Pdf
+            <i class="fas fa-file-pdf fa-2x "></i>
+        </a>
 
 
     </div>
@@ -147,7 +192,9 @@
                 Filter:&nbsp;
                 <input type="search" name="keyword" th:value="${keyword}" class="form-control"  required />
                 &nbsp;&nbsp;
-                <input type="submit" value="Search" class="btn btn-primary" />
+                <button type="submit" value="Search" class="btn btn-primary" />
+                    <i class="fas fa-search"></i>
+                </button>
                 &nbsp;&nbsp;
                 <input type="button" value="Clear" class="btn btn-secondary " onclick="clearFilter()">
             </form>
@@ -158,7 +205,7 @@
         [[${message}]]
     </div>
 
-    <div>
+    <div class="full-details">
         <table class="table table-bordered table-striped table-hover table-light  table-responsive-xl">
             <thead class="bg-info">
 
@@ -218,6 +265,45 @@
                     </td>
 
                 </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="less-details">
+        <table class="table table-bordered table-striped table-hover table-light  table-responsive-xl">
+            <thead class="bg-info">
+
+            <th>Photo</th>
+            <th>Enabled</th>
+            <th></th>
+
+            </thead>
+            <tbody>
+            <tr th:each="user: ${listUsers}">
+                <td>
+                    <div  class="box">
+                        <div >
+                            <span th:if="${user.photos == null}" class="fas fa-portrait fa-6x center icon-dark img " ></span>
+                        </div>
+                        <div >
+                            <img class="box1 img"  th:if="${user.photos != null}" th:src="@{${user.photosImagePath}}" />
+                        </div>
+
+                    </div>
+
+                </td>
+
+                <td>
+                    <a th:if="${user.enabled == true}" class="fas fa-check-circle fa-2x icon-green center" th:href="@{'/users/disable/'+${user.id}}" ></a>
+                    <a th:if="${user.enabled != true}" class="fas fa-check-circle fa-2x icon-silver center" th:href="@{'/users/enable/'+${user.id}}" id="enable"></a>
+                </td>
+                <td>
+                    <a title="Edit this User" class="fas fa-edit fa-2x icon-green left" th:href="@{'/users/edit/'+${user.id}}"></a>
+
+                    <a title="Delete this User" class="fas fa-trash fa-2x icon-dark link-delete right" th:href="@{'/users/delete/'+${user.id}}" th:userId="${user.id}"></a>
+                </td>
+
+            </tr>
             </tbody>
         </table>
     </div>
